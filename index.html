@@ -25,12 +25,13 @@
       --accent-2: #f59e0b;
       --accent-3: #f43f5e;
       --accent-ok: #10b981;
+      --accent-audius: #a855f7;
       --active-color: var(--accent-0-stop);
 
       --radius-lg: 14px;
       --radius-md: 10px;
       --radius-sm: 7px;
-      --gap: clamp(5px, 1.1dvh, 9px);
+      --gap: clamp(4px, 0.95dvh, 8px);
       --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Segoe UI", sans-serif;
       --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     }
@@ -44,6 +45,7 @@
       margin: 0;
       padding: 0;
       width: 100%;
+      height: 100vh;
       height: 100dvh;
       overflow: hidden;
       background-color: var(--bg-chassis);
@@ -56,16 +58,35 @@
       overscroll-behavior: none;
     }
 
+    input[type="search"],
+    input[type="text"],
+    textarea {
+      user-select: text;
+      -webkit-user-select: text;
+      -webkit-touch-callout: default;
+      touch-action: manipulation;
+    }
+
+    button,
+    label.btn {
+      touch-action: manipulation;
+    }
+
+    .is-hidden {
+      display: none !important;
+    }
+
     .app-shell {
+      height: 100vh;
       height: 100dvh;
       width: 100%;
       max-width: 540px;
       margin: 0 auto;
       padding:
-        calc(6px + env(safe-area-inset-top))
-        calc(10px + env(safe-area-inset-right))
-        calc(6px + env(safe-area-inset-bottom))
-        calc(10px + env(safe-area-inset-left));
+        calc(5px + env(safe-area-inset-top))
+        calc(9px + env(safe-area-inset-right))
+        calc(5px + env(safe-area-inset-bottom))
+        calc(9px + env(safe-area-inset-left));
       display: flex;
       flex-direction: column;
       gap: var(--gap);
@@ -87,8 +108,8 @@
     .topbar {
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 6px 8px;
+      gap: 5px;
+      padding: 5px 7px;
       min-height: 44px;
       flex-shrink: 0;
     }
@@ -96,8 +117,8 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 5px;
-      padding-right: 4px;
+      gap: 4px;
+      padding-right: 2px;
       flex-shrink: 0;
     }
 
@@ -121,9 +142,9 @@
     }
 
     .brand-title {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 800;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       color: var(--text-secondary);
       white-space: nowrap;
     }
@@ -143,18 +164,19 @@
       background: linear-gradient(180deg, #252e3f 0%, #1a212e 100%);
       color: var(--text-primary);
       font-family: inherit;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       border-radius: var(--radius-sm);
-      padding: 6px 9px;
+      padding: 5px 7px;
       height: 32px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 4px;
+      gap: 3px;
       cursor: pointer;
       white-space: nowrap;
       flex-shrink: 0;
+      touch-action: manipulation;
       transition: transform 0.08s ease, border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
     }
 
@@ -169,7 +191,7 @@
 
     .btn-demo {
       color: #cbd5e1;
-      padding: 6px 8px;
+      padding: 5px 7px;
     }
 
     .btn-demo.active {
@@ -184,10 +206,30 @@
       background: var(--bg-well);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-sm);
-      padding: 0 8px;
+      padding: 2px 6px 2px 4px;
       display: flex;
       align-items: center;
+      gap: 6px;
       overflow: hidden;
+    }
+
+    .now-art {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      object-fit: cover;
+      background: #1a212e;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      flex-shrink: 0;
+    }
+
+    .now-meta {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      line-height: 1.15;
     }
 
     .track-name {
@@ -201,13 +243,22 @@
 
     .track-name.loaded {
       color: var(--text-primary);
-      font-weight: 600;
+      font-weight: 700;
+    }
+
+    .track-artist {
+      font-size: 9px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
     }
 
     .btn-transport {
-      width: 38px;
+      width: 34px;
       padding: 0;
-      font-size: 14px;
+      font-size: 13px;
       background: linear-gradient(180deg, #1f332c 0%, #13221d 100%);
       border-color: rgba(16, 185, 129, 0.45);
       color: #6ee7b7;
@@ -219,12 +270,74 @@
       color: #fda4af;
     }
 
+    /* Compact Tab Bar */
+    .tab-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      padding: 3px;
+      border-radius: var(--radius-md);
+      flex-shrink: 0;
+    }
+
+    .tab-btn {
+      appearance: none;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 800;
+      border-radius: var(--radius-sm);
+      height: 26px;
+      padding: 0 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      touch-action: manipulation;
+      transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    .tab-btn:active {
+      transform: scale(0.97);
+    }
+
+    .tab-btn.is-active {
+      background: rgba(56, 189, 248, 0.14);
+      border-color: rgba(56, 189, 248, 0.48);
+      color: #e0f2fe;
+    }
+
+    .tab-btn[data-tab="audius"].is-active {
+      background: rgba(168, 85, 247, 0.18);
+      border-color: rgba(168, 85, 247, 0.55);
+      color: #f3e8ff;
+    }
+
+    .tab-btn[data-tab="favorites"].is-active {
+      background: rgba(245, 158, 11, 0.16);
+      border-color: rgba(245, 158, 11, 0.52);
+      color: #fef3c7;
+    }
+
+    /* Mixer Tab View */
+    .tab-view-mixer {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
+    }
+
     /* 2. Meter & Options Deck */
     .deck {
       display: grid;
-      grid-template-columns: minmax(106px, 122px) 1fr;
-      gap: 10px;
-      padding: clamp(7px, 1.3dvh, 11px) 10px;
+      grid-template-columns: minmax(98px, 116px) 1fr;
+      gap: 9px;
+      padding: clamp(6px, 1.1dvh, 10px) 10px;
       align-items: center;
       flex-shrink: 0;
     }
@@ -233,7 +346,7 @@
       position: relative;
       width: 100%;
       aspect-ratio: 1 / 1;
-      max-width: 118px;
+      max-width: 112px;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -250,7 +363,7 @@
     .deck-info {
       display: flex;
       flex-direction: column;
-      gap: clamp(4px, 0.8dvh, 7px);
+      gap: clamp(3px, 0.7dvh, 6px);
       min-width: 0;
     }
 
@@ -271,16 +384,17 @@
     .rate-value {
       font-family: var(--font-mono);
       font-variant-numeric: tabular-nums;
-      font-size: clamp(28px, 5.2dvh, 36px);
+      font-size: clamp(26px, 4.8dvh, 34px);
       font-weight: 800;
       letter-spacing: -0.03em;
       color: var(--text-primary);
+      text-shadow: 0 0 18px rgba(56, 189, 248, 0.25);
       text-shadow: 0 0 18px color-mix(in srgb, var(--active-color) 40%, transparent);
     }
 
     .rate-unit {
       font-family: var(--font-mono);
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       color: var(--text-secondary);
     }
@@ -294,11 +408,13 @@
     }
 
     .mode-badge {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 800;
       padding: 2px 7px;
       border-radius: 999px;
+      border: 1px solid var(--active-color);
       border: 1px solid color-mix(in srgb, var(--active-color) 55%, transparent);
+      background: #0b0d11;
       background: color-mix(in srgb, var(--active-color) 16%, #0b0d11);
       color: var(--text-primary);
       white-space: nowrap;
@@ -358,8 +474,8 @@
       font-size: 11px;
       font-weight: 700;
       border-radius: var(--radius-sm);
-      padding: 5px 8px;
-      height: 28px;
+      padding: 4px 8px;
+      height: 27px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -368,6 +484,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      touch-action: manipulation;
       transition: border-color 0.15s, color 0.15s, background-color 0.15s;
     }
 
@@ -396,7 +513,7 @@
     /* 3. 2x2 Large Hardware Mode Pads */
     .pads-grid {
       flex: 1;
-      min-height: 132px;
+      min-height: 116px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
@@ -411,7 +528,7 @@
       border-radius: var(--radius-lg);
       background: linear-gradient(180deg, #1d2432 0%, #121721 100%);
       color: var(--text-primary);
-      padding: clamp(8px, 1.4dvh, 14px) 12px;
+      padding: clamp(7px, 1.2dvh, 12px) 11px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -419,6 +536,7 @@
       text-align: left;
       cursor: pointer;
       overflow: hidden;
+      touch-action: manipulation;
       box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.06),
         0 4px 12px rgba(0, 0, 0, 0.35);
@@ -442,6 +560,7 @@
       right: 12px;
       height: 3px;
       border-radius: 0 0 4px 4px;
+      background: #263042;
       background: color-mix(in srgb, var(--pad-color) 35%, #263042);
       transition: background-color 0.15s ease, box-shadow 0.15s ease;
     }
@@ -467,7 +586,7 @@
     .pad-rate {
       font-family: var(--font-mono);
       font-variant-numeric: tabular-nums;
-      font-size: clamp(12px, 2dvh, 14px);
+      font-size: clamp(12px, 1.9dvh, 14px);
       font-weight: 700;
       color: var(--text-secondary);
     }
@@ -481,7 +600,7 @@
     }
 
     .pad-label-ja {
-      font-size: clamp(19px, 3.2dvh, 24px);
+      font-size: clamp(18px, 3dvh, 23px);
       font-weight: 900;
       letter-spacing: 0.02em;
       line-height: 1.1;
@@ -496,11 +615,15 @@
 
     .mode-pad.is-active {
       border-color: var(--pad-color);
+      background: linear-gradient(180deg, #232c3d 0%, #131823 100%);
       background: linear-gradient(
         180deg,
         color-mix(in srgb, var(--pad-color) 20%, #1b2230) 0%,
         color-mix(in srgb, var(--pad-color) 9%, #111620) 100%
       );
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        0 0 16px rgba(255, 255, 255, 0.12);
       box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.15),
         0 0 18px color-mix(in srgb, var(--pad-color) 32%, transparent);
@@ -512,8 +635,10 @@
     }
 
     .mode-pad.is-active .pad-key {
+      border-color: var(--pad-color);
       border-color: color-mix(in srgb, var(--pad-color) 65%, transparent);
       color: var(--text-primary);
+      background: #141a24;
       background: color-mix(in srgb, var(--pad-color) 26%, #0b0d11);
     }
 
@@ -541,10 +666,10 @@
 
     /* 4. Real-Time Sliders Panel */
     .tuning-panel {
-      padding: clamp(6px, 1.1dvh, 10px) 10px;
+      padding: clamp(5px, 0.9dvh, 9px) 10px;
       display: flex;
       flex-direction: column;
-      gap: clamp(4px, 0.8dvh, 7px);
+      gap: clamp(3px, 0.65dvh, 6px);
       flex-shrink: 0;
     }
 
@@ -572,6 +697,7 @@
       border-radius: 5px;
       padding: 2px 7px;
       cursor: pointer;
+      touch-action: manipulation;
     }
 
     .btn-reset:active {
@@ -583,7 +709,7 @@
       grid-template-columns: 78px 1fr 48px;
       align-items: center;
       gap: 8px;
-      height: clamp(23px, 3.6dvh, 28px);
+      height: clamp(22px, 3.3dvh, 26px);
     }
 
     .slider-label {
@@ -666,6 +792,337 @@
       color: var(--text-primary);
     }
 
+    /* Audius & Favorites Tab Views */
+    .explore-panel {
+      flex: 1;
+      min-height: 0;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      overflow: hidden;
+    }
+
+    .mini-mixer-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 4px 7px;
+      background: var(--bg-well);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+    }
+
+    .mini-rate-info {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    .mini-mode-btns {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .mini-mode-btn {
+      appearance: none;
+      border: 1px solid var(--border-strong);
+      background: #18202c;
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 10px;
+      font-weight: 800;
+      border-radius: 5px;
+      padding: 3px 7px;
+      height: 24px;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    .mini-mode-btn.is-active {
+      border-color: var(--active-color);
+      color: var(--text-primary);
+      background: rgba(56, 189, 248, 0.16);
+      background: color-mix(in srgb, var(--active-color) 20%, #0b0d11);
+    }
+
+    .search-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 0;
+      height: 36px;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: var(--bg-well);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 16px;
+      line-height: 1.2;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-audius);
+      box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.25);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .btn-search {
+      height: 36px;
+      padding: 0 11px;
+      background: linear-gradient(180deg, #4c1d95 0%, #3b0764 100%);
+      border-color: rgba(192, 132, 252, 0.45);
+      color: #f3e8ff;
+    }
+
+    .btn-random {
+      height: 36px;
+      padding: 0 9px;
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      border-color: rgba(34, 211, 238, 0.45);
+      color: #67e8f9;
+    }
+
+    .chips-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding-bottom: 2px;
+      flex-shrink: 0;
+      touch-action: pan-x;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .chips-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chip-btn {
+      appearance: none;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-well);
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 5px 11px;
+      height: 28px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .chip-btn:active {
+      transform: scale(0.96);
+    }
+
+    .chip-btn.is-active {
+      border-color: rgba(192, 132, 252, 0.7);
+      background: rgba(168, 85, 247, 0.22);
+      color: #f3e8ff;
+    }
+
+    .list-status {
+      font-size: 11px;
+      color: var(--text-secondary);
+      padding: 2px 2px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      flex-shrink: 0;
+      min-height: 18px;
+    }
+
+    .list-status.err {
+      color: #fca5a5;
+    }
+
+    .list-status.ok {
+      color: #6ee7b7;
+    }
+
+    .track-list {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-right: 2px;
+      touch-action: pan-y;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .track-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 6px 8px;
+      border-radius: var(--radius-md);
+      background: var(--bg-well);
+      border: 1px solid var(--border-subtle);
+      cursor: pointer;
+      touch-action: manipulation;
+      text-align: left;
+      width: 100%;
+      flex-shrink: 0;
+      transition: border-color 0.14s, background-color 0.14s;
+    }
+
+    .track-row:active {
+      transform: scale(0.99);
+    }
+
+    .track-row.is-playing {
+      border-color: var(--accent-1);
+      background: rgba(34, 211, 238, 0.1);
+    }
+
+    .track-row.is-loading {
+      border-color: var(--accent-audius);
+      background: rgba(168, 85, 247, 0.14);
+    }
+
+    .track-row.is-too-long {
+      opacity: 0.62;
+    }
+
+    .row-art {
+      width: 42px;
+      height: 42px;
+      border-radius: 7px;
+      object-fit: cover;
+      background: #1a212e;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      flex-shrink: 0;
+    }
+
+    .row-main {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .row-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .row-sub {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      color: var(--text-secondary);
+      min-width: 0;
+    }
+
+    .row-artist {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .row-dur {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .row-warn-badge {
+      font-size: 9px;
+      font-weight: 800;
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: rgba(239, 68, 68, 0.18);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      flex-shrink: 0;
+    }
+
+    .fav-btn {
+      appearance: none;
+      border: 1px solid var(--border-subtle);
+      background: #161d29;
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      touch-action: manipulation;
+    }
+
+    .fav-btn.is-fav {
+      border-color: rgba(245, 158, 11, 0.55);
+      background: rgba(245, 158, 11, 0.16);
+      color: #fbbf24;
+    }
+
+    .empty-state {
+      padding: 24px 12px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .fav-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .fav-header-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
     /* Bottom Micro-Status Bar & Corner Key Debug */
     .footer-bar {
       display: flex;
@@ -745,6 +1202,12 @@
       box-shadow: 0 0 8px var(--accent-2);
     }
 
+    @media (max-width: 390px) {
+      .brand-title {
+        display: none;
+      }
+    }
+
     @media (max-height: 480px) {
       html, body {
         overflow-y: auto;
@@ -756,214 +1219,278 @@
       .pads-grid {
         min-height: 140px;
       }
+      .explore-panel {
+        min-height: 320px;
+      }
     }
   </style>
 </head>
 <body>
   <main class="app-shell">
-    <!-- 1. Top Transport & File Bar -->
+    <!-- 1. Top Transport & Now Playing Bar -->
     <header class="panel topbar">
       <div class="brand">
         <span class="status-led" id="statusLed" aria-hidden="true"></span>
         <span class="brand-title">BT MIXER</span>
       </div>
 
-      <input
-        type="file"
-        id="fileInput"
-        class="file-input-hidden"
-        accept="audio/*,audio/mpeg,audio/wav,audio/x-wav,audio/mp4,audio/x-m4a,.mp3,.wav,.m4a,.aac,.ogg,.flac"
-      />
+      <!-- No accept attribute so iOS Safari allows selecting .wav files in Files app -->
+      <input type="file" id="fileInput" class="file-input-hidden" />
       <label for="fileInput" id="fileLabel" class="btn" title="音声ファイルを選択">📂 音源</label>
 
       <button type="button" id="demoBtn" class="btn btn-demo" title="内蔵デモ音源をロード">♪ デモ</button>
 
       <div class="track-pill" title="読み込み中の音源">
-        <span id="trackName" class="track-name">音源未選択</span>
+        <img id="nowPlayingArt" class="now-art" alt="" />
+        <div class="now-meta">
+          <span id="trackName" class="track-name">音源未選択</span>
+          <span id="trackArtist" class="track-artist">ファイル / デモ / Audius</span>
+        </div>
       </div>
 
       <button type="button" id="playStopBtn" class="btn btn-transport" aria-label="再生または停止">▶</button>
     </header>
 
-    <!-- 2. Meter & Options Deck -->
-    <section class="panel deck" aria-label="メーターと設定">
-      <div class="rotor-box">
-        <svg class="rotor-svg" viewBox="0 0 120 120" aria-hidden="true">
-          <defs>
-            <radialGradient id="platterGrad" cx="50%" cy="45%" r="55%">
-              <stop offset="0%" stop-color="#283244" />
-              <stop offset="65%" stop-color="#141923" />
-              <stop offset="100%" stop-color="#0b0e14" />
-            </radialGradient>
-          </defs>
+    <!-- Compact Tab Bar -->
+    <nav class="panel tab-bar" aria-label="表示切替">
+      <button type="button" class="tab-btn is-active" data-tab="mixer" id="tabMixerBtn">🎛 ミキサー</button>
+      <button type="button" class="tab-btn" data-tab="audius" id="tabAudiusBtn">🎧 Audius</button>
+      <button type="button" class="tab-btn" data-tab="favorites" id="tabFavBtn">★ お気に入り (0)</button>
+    </nav>
 
-          <!-- Level meter outer ring -->
-          <circle cx="60" cy="60" r="55" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3" />
-          <circle
-            id="audioRing"
-            cx="60"
-            cy="60"
-            r="55"
-            fill="none"
-            stroke="#22d3ee"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-dasharray="345.6"
-            stroke-dashoffset="345.6"
-            transform="rotate(-90 60 60)"
-            opacity="0.7"
-          />
+    <!-- TAB 1: Mixer View (Original Deck + Pads + Sliders) -->
+    <div id="tabViewMixer" class="tab-view-mixer">
+      <!-- 2. Meter & Options Deck -->
+      <section class="panel deck" aria-label="メーターと設定">
+        <div class="rotor-box">
+          <svg class="rotor-svg" viewBox="0 0 120 120" aria-hidden="true">
+            <defs>
+              <radialGradient id="platterGrad" cx="50%" cy="45%" r="55%">
+                <stop offset="0%" stop-color="#283244" />
+                <stop offset="65%" stop-color="#141923" />
+                <stop offset="100%" stop-color="#0b0e14" />
+              </radialGradient>
+            </defs>
 
-          <!-- Tachometer track (270 deg arc from 135 deg to 405 deg, r=46) -->
-          <path
-            d="M 27.5 92.5 A 46 46 0 1 1 92.5 92.5"
-            fill="none"
-            stroke="#0b0e14"
-            stroke-width="6"
-            stroke-linecap="round"
-          />
-          <path
-            id="tachoArc"
-            d="M 27.5 92.5 A 46 46 0 1 1 92.5 92.5"
-            fill="none"
-            stroke="var(--active-color)"
-            stroke-width="5"
-            stroke-linecap="round"
-            stroke-dasharray="216.8"
-            stroke-dashoffset="216.8"
-          />
+            <circle cx="60" cy="60" r="55" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3" />
+            <circle
+              id="audioRing"
+              cx="60"
+              cy="60"
+              r="55"
+              fill="none"
+              stroke="#22d3ee"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-dasharray="345.6"
+              stroke-dashoffset="345.6"
+              transform="rotate(-90 60 60)"
+              opacity="0.7"
+            />
 
-          <!-- Spinning turntable disc -->
-          <g id="rotorGroup" transform="rotate(0 60 60)">
-            <circle cx="60" cy="60" r="34" fill="url(#platterGrad)" stroke="rgba(255,255,255,0.16)" stroke-width="1.2" />
-            <circle cx="60" cy="60" r="26" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1" />
-            <circle cx="60" cy="60" r="18" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1" />
-            <line x1="60" y1="28" x2="60" y2="41" stroke="var(--active-color)" stroke-width="3" stroke-linecap="round" />
-            <circle cx="60" cy="31" r="2" fill="#f8fafc" />
-          </g>
+            <path
+              d="M 27.5 92.5 A 46 46 0 1 1 92.5 92.5"
+              fill="none"
+              stroke="#0b0e14"
+              stroke-width="6"
+              stroke-linecap="round"
+            />
+            <path
+              id="tachoArc"
+              d="M 27.5 92.5 A 46 46 0 1 1 92.5 92.5"
+              fill="none"
+              stroke="var(--active-color)"
+              stroke-width="5"
+              stroke-linecap="round"
+              stroke-dasharray="216.8"
+              stroke-dashoffset="216.8"
+            />
 
-          <!-- Tachometer needle -->
-          <g id="needleGroup" transform="rotate(-135 60 60)">
-            <line x1="60" y1="60" x2="60" y2="17" stroke="#f8fafc" stroke-width="2" stroke-linecap="round" />
-          </g>
+            <g id="rotorGroup" transform="rotate(0 60 60)">
+              <circle cx="60" cy="60" r="34" fill="url(#platterGrad)" stroke="rgba(255,255,255,0.16)" stroke-width="1.2" />
+              <circle cx="60" cy="60" r="26" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1" />
+              <circle cx="60" cy="60" r="18" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1" />
+              <line x1="60" y1="28" x2="60" y2="41" stroke="var(--active-color)" stroke-width="3" stroke-linecap="round" />
+              <circle cx="60" cy="31" r="2" fill="#f8fafc" />
+            </g>
 
-          <!-- Center spindle -->
-          <circle cx="60" cy="60" r="8" fill="#111620" stroke="var(--active-color)" stroke-width="2" />
-          <circle cx="60" cy="60" r="3" fill="#f8fafc" />
+            <g id="needleGroup" transform="rotate(-135 60 60)">
+              <line x1="60" y1="60" x2="60" y2="17" stroke="#f8fafc" stroke-width="2" stroke-linecap="round" />
+            </g>
 
-          <!-- Arc labels -->
-          <text x="20" y="106" fill="#64748b" font-size="8" font-family="monospace" text-anchor="middle">0x</text>
-          <text x="100" y="106" fill="#64748b" font-size="8" font-family="monospace" text-anchor="middle">3x</text>
-        </svg>
+            <circle cx="60" cy="60" r="8" fill="#111620" stroke="var(--active-color)" stroke-width="2" />
+            <circle cx="60" cy="60" r="3" fill="#f8fafc" />
+
+            <text x="20" y="106" fill="#64748b" font-size="8" font-family="monospace" text-anchor="middle">0x</text>
+            <text x="100" y="106" fill="#64748b" font-size="8" font-family="monospace" text-anchor="middle">3x</text>
+          </svg>
+        </div>
+
+        <div class="deck-info">
+          <div class="readout-row">
+            <div class="rate-main">
+              <span id="liveRateText" class="rate-value">0.00</span>
+              <span class="rate-unit">x</span>
+            </div>
+            <div class="mode-meta">
+              <span id="activeModeBadge" class="mode-badge">[0] 切 / OFF</span>
+              <span id="targetRateText" class="target-sub">TARGET: STOP</span>
+            </div>
+          </div>
+
+          <div class="progress-wrap">
+            <div class="progress-track">
+              <div id="progressFill" class="progress-fill"></div>
+            </div>
+            <span id="timeReadout" class="time-readout">00:00 / 00:00</span>
+          </div>
+
+          <div class="toggles-row">
+            <button type="button" id="loopToggleBtn" class="pill-toggle is-on">LOOP: ON</button>
+            <button type="button" id="zeroModeToggleBtn" class="pill-toggle zero-stop">0(切): 減速停止</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. 2x2 Large Hardware Mode Pads -->
+      <section class="pads-grid" aria-label="ミキサーモードパッド">
+        <button type="button" class="mode-pad is-active" data-mode="0" id="pad0">
+          <span class="pad-led-bar" aria-hidden="true"></span>
+          <div class="pad-top">
+            <span class="pad-key">KEY 0</span>
+            <span class="pad-rate" id="padRate0">減速停止</span>
+          </div>
+          <div class="pad-center">
+            <span class="pad-label-ja">切</span>
+            <span class="pad-label-en">OFF</span>
+          </div>
+        </button>
+
+        <button type="button" class="mode-pad" data-mode="1" id="pad1">
+          <span class="pad-led-bar" aria-hidden="true"></span>
+          <div class="pad-top">
+            <span class="pad-key">KEY 1</span>
+            <span class="pad-rate" id="padRate1">1.00x</span>
+          </div>
+          <div class="pad-center">
+            <span class="pad-label-ja">弱</span>
+            <span class="pad-label-en">LOW</span>
+          </div>
+        </button>
+
+        <button type="button" class="mode-pad" data-mode="2" id="pad2">
+          <span class="pad-led-bar" aria-hidden="true"></span>
+          <div class="pad-top">
+            <span class="pad-key">KEY 2</span>
+            <span class="pad-rate" id="padRate2">1.40x</span>
+          </div>
+          <div class="pad-center">
+            <span class="pad-label-ja">強</span>
+            <span class="pad-label-en">HIGH</span>
+          </div>
+        </button>
+
+        <button type="button" class="mode-pad" data-mode="3" id="pad3">
+          <span class="pad-led-bar" aria-hidden="true"></span>
+          <div class="pad-top">
+            <span class="pad-key">KEY 3</span>
+            <span class="pad-rate" id="padRate3">2.00x</span>
+          </div>
+          <div class="pad-center">
+            <span class="pad-label-ja">フラッシュ</span>
+            <span class="pad-label-en">FLASH</span>
+          </div>
+        </button>
+      </section>
+
+      <!-- 4. Real-Time Sliders Panel -->
+      <section class="panel tuning-panel" aria-label="スピードと慣性の調整">
+        <div class="tuning-header">
+          <span class="tuning-title">TUNING (倍率 &amp; モーター慣性)</span>
+          <button type="button" id="resetBtn" class="btn-reset">↺ 初期値</button>
+        </div>
+
+        <div class="slider-row">
+          <label class="slider-label" for="slider1"><span class="dot dot-1"></span>弱 (1)</label>
+          <input id="slider1" class="slider" type="range" min="0.25" max="3.00" step="0.05" value="1.00" />
+          <span id="val1" class="slider-val">1.00x</span>
+        </div>
+
+        <div class="slider-row">
+          <label class="slider-label" for="slider2"><span class="dot dot-2"></span>強 (2)</label>
+          <input id="slider2" class="slider" type="range" min="0.25" max="3.00" step="0.05" value="1.40" />
+          <span id="val2" class="slider-val">1.40x</span>
+        </div>
+
+        <div class="slider-row">
+          <label class="slider-label" for="slider3"><span class="dot dot-3"></span>ﾌﾗｯｼｭ (3)</label>
+          <input id="slider3" class="slider" type="range" min="0.25" max="3.00" step="0.05" value="2.00" />
+          <span id="val3" class="slider-val">2.00x</span>
+        </div>
+
+        <div class="slider-row">
+          <label class="slider-label" for="sliderTau"><span class="dot dot-tau"></span>慣性 (τ)</label>
+          <input id="sliderTau" class="slider" type="range" min="0.02" max="1.50" step="0.02" value="0.25" />
+          <span id="valTau" class="slider-val">0.25s</span>
+        </div>
+      </section>
+    </div>
+
+    <!-- TAB 2: Audius Explorer View -->
+    <section id="tabViewAudius" class="panel explore-panel is-hidden" aria-label="Audius楽曲探索">
+      <div class="mini-mixer-bar" id="audiusMiniBar">
+        <span class="mini-rate-info" id="audiusMiniRate">[0] 0.00x</span>
+        <div class="mini-mode-btns">
+          <button type="button" class="mini-mode-btn is-active" data-mini-mode="0">0切</button>
+          <button type="button" class="mini-mode-btn" data-mini-mode="1">1弱</button>
+          <button type="button" class="mini-mode-btn" data-mini-mode="2">2強</button>
+          <button type="button" class="mini-mode-btn" data-mini-mode="3">3⚡</button>
+        </div>
       </div>
 
-      <div class="deck-info">
-        <div class="readout-row">
-          <div class="rate-main">
-            <span id="liveRateText" class="rate-value">0.00</span>
-            <span class="rate-unit">x</span>
-          </div>
-          <div class="mode-meta">
-            <span id="activeModeBadge" class="mode-badge">[0] 切 / OFF</span>
-            <span id="targetRateText" class="target-sub">TARGET: STOP</span>
-          </div>
-        </div>
+      <form id="audiusSearchForm" class="search-row" autocomplete="off">
+        <input
+          type="search"
+          id="audiusSearchInput"
+          class="search-input"
+          placeholder="キーワード検索 (任意)"
+          enterkeyhint="search"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+        />
+        <button type="submit" id="audiusSearchBtn" class="btn btn-search">検索</button>
+        <button type="button" id="audiusRandomBtn" class="btn btn-random" title="現在のリストからランダム読込">🎲 ランダム</button>
+      </form>
 
-        <div class="progress-wrap">
-          <div class="progress-track">
-            <div id="progressFill" class="progress-fill"></div>
-          </div>
-          <span id="timeReadout" class="time-readout">00:00 / 00:00</span>
-        </div>
+      <div id="audiusChipsRow" class="chips-row" aria-label="プリセットジャンル"></div>
 
-        <div class="toggles-row">
-          <button type="button" id="loopToggleBtn" class="pill-toggle is-on">LOOP: ON</button>
-          <button type="button" id="zeroModeToggleBtn" class="pill-toggle zero-stop">0(切): 減速停止</button>
-        </div>
-      </div>
+      <div id="audiusListStatus" class="list-status">ジャンルまたは検索でAudius楽曲を読み込みます</div>
+
+      <div id="audiusTrackList" class="track-list" role="list"></div>
     </section>
 
-    <!-- 3. 2x2 Large Hardware Mode Pads -->
-    <section class="pads-grid" aria-label="ミキサーモードパッド">
-      <button type="button" class="mode-pad is-active" data-mode="0" id="pad0">
-        <span class="pad-led-bar" aria-hidden="true"></span>
-        <div class="pad-top">
-          <span class="pad-key">KEY 0</span>
-          <span class="pad-rate" id="padRate0">減速停止</span>
+    <!-- TAB 3: Favorites View -->
+    <section id="tabViewFavorites" class="panel explore-panel is-hidden" aria-label="お気に入り楽曲">
+      <div class="mini-mixer-bar">
+        <span class="mini-rate-info" id="favMiniRate">[0] 0.00x</span>
+        <div class="mini-mode-btns">
+          <button type="button" class="mini-mode-btn is-active" data-mini-mode="0">0切</button>
+          <button type="button" class="mini-mode-btn" data-mini-mode="1">1弱</button>
+          <button type="button" class="mini-mode-btn" data-mini-mode="2">2強</button>
+          <button type="button" class="mini-mode-btn" data-mini-mode="3">3⚡</button>
         </div>
-        <div class="pad-center">
-          <span class="pad-label-ja">切</span>
-          <span class="pad-label-en">OFF</span>
-        </div>
-      </button>
-
-      <button type="button" class="mode-pad" data-mode="1" id="pad1">
-        <span class="pad-led-bar" aria-hidden="true"></span>
-        <div class="pad-top">
-          <span class="pad-key">KEY 1</span>
-          <span class="pad-rate" id="padRate1">1.00x</span>
-        </div>
-        <div class="pad-center">
-          <span class="pad-label-ja">弱</span>
-          <span class="pad-label-en">LOW</span>
-        </div>
-      </button>
-
-      <button type="button" class="mode-pad" data-mode="2" id="pad2">
-        <span class="pad-led-bar" aria-hidden="true"></span>
-        <div class="pad-top">
-          <span class="pad-key">KEY 2</span>
-          <span class="pad-rate" id="padRate2">1.40x</span>
-        </div>
-        <div class="pad-center">
-          <span class="pad-label-ja">強</span>
-          <span class="pad-label-en">HIGH</span>
-        </div>
-      </button>
-
-      <button type="button" class="mode-pad" data-mode="3" id="pad3">
-        <span class="pad-led-bar" aria-hidden="true"></span>
-        <div class="pad-top">
-          <span class="pad-key">KEY 3</span>
-          <span class="pad-rate" id="padRate3">2.00x</span>
-        </div>
-        <div class="pad-center">
-          <span class="pad-label-ja">フラッシュ</span>
-          <span class="pad-label-en">FLASH</span>
-        </div>
-      </button>
-    </section>
-
-    <!-- 4. Real-Time Sliders Panel -->
-    <section class="panel tuning-panel" aria-label="スピードと慣性の調整">
-      <div class="tuning-header">
-        <span class="tuning-title">TUNING (倍率 &amp; モーター慣性)</span>
-        <button type="button" id="resetBtn" class="btn-reset">↺ 初期値</button>
       </div>
 
-      <div class="slider-row">
-        <label class="slider-label" for="slider1"><span class="dot dot-1"></span>弱 (1)</label>
-        <input id="slider1" class="slider" type="range" min="0.25" max="3.00" step="0.05" value="1.00" />
-        <span id="val1" class="slider-val">1.00x</span>
+      <div class="fav-header-row">
+        <span class="fav-header-title">★ 保存済みお気に入り</span>
+        <button type="button" id="favRandomBtn" class="btn btn-random">🎲 お気に入りランダム</button>
       </div>
 
-      <div class="slider-row">
-        <label class="slider-label" for="slider2"><span class="dot dot-2"></span>強 (2)</label>
-        <input id="slider2" class="slider" type="range" min="0.25" max="3.00" step="0.05" value="1.40" />
-        <span id="val2" class="slider-val">1.40x</span>
-      </div>
+      <div id="favListStatus" class="list-status"></div>
 
-      <div class="slider-row">
-        <label class="slider-label" for="slider3"><span class="dot dot-3"></span>ﾌﾗｯｼｭ (3)</label>
-        <input id="slider3" class="slider" type="range" min="0.25" max="3.00" step="0.05" value="2.00" />
-        <span id="val3" class="slider-val">2.00x</span>
-      </div>
-
-      <div class="slider-row">
-        <label class="slider-label" for="sliderTau"><span class="dot dot-tau"></span>慣性 (τ)</label>
-        <input id="sliderTau" class="slider" type="range" min="0.02" max="1.50" step="0.02" value="0.25" />
-        <span id="valTau" class="slider-val">0.25s</span>
-      </div>
+      <div id="favTrackList" class="track-list" role="list"></div>
     </section>
 
     <!-- Corner Debug & Audio State Footer -->
@@ -988,6 +1515,34 @@
       }
 
       const STORAGE_KEY = 'bt_mixer_pitch_settings_v1';
+      const FAVORITES_STORAGE_KEY = 'bt_mixer_audius_favorites_v1';
+      const AUDIUS_APP_NAME = 'mixer_player';
+      const AUDIUS_DISCOVERY_API = 'https://api.audius.co';
+      const AUDIUS_FALLBACK_HOST = 'https://discoveryprovider.audius.co';
+      const MAX_AUDIUS_DURATION_SEC = 900;
+
+      const PRESET_GENRES = [
+        { id: 'trending', label: 'Trending', genre: '', fallbackQuery: '' },
+        { id: 'electronic', label: 'Electronic', genre: 'Electronic', fallbackQuery: 'Electronic' },
+        { id: 'hiphop', label: 'Hip-Hop', genre: 'Hip-Hop/Rap', fallbackQuery: 'Hip-Hop' },
+        { id: 'house', label: 'House', genre: 'House', fallbackQuery: 'House' },
+        { id: 'lofi', label: 'Lo-Fi', genre: 'Lo-Fi', fallbackQuery: 'Lo-Fi' },
+        { id: 'techno', label: 'Techno', genre: 'Techno', fallbackQuery: 'Techno' },
+        { id: 'dnb', label: 'Drum & Bass', genre: 'Drum & Bass', fallbackQuery: 'Drum & Bass' },
+        { id: 'ambient', label: 'Ambient', genre: 'Ambient', fallbackQuery: 'Ambient' }
+      ];
+
+      const PLACEHOLDER_ART_URI =
+        'data:image/svg+xml;charset=utf-8,' +
+        encodeURIComponent(
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">' +
+          '<rect width="64" height="64" rx="8" fill="#141a24"/>' +
+          '<circle cx="32" cy="32" r="20" fill="#0d1118" stroke="#334155" stroke-width="2"/>' +
+          '<circle cx="32" cy="32" r="12" fill="none" stroke="#1e293b" stroke-width="1.5"/>' +
+          '<circle cx="32" cy="32" r="5" fill="#38bdf8"/>' +
+          '</svg>'
+        );
+
       const DEFAULTS = {
         rates: { 1: 1.00, 2: 1.40, 3: 2.00 },
         inertiaTau: 0.25,
@@ -1011,7 +1566,9 @@
 
       // App state
       let settings = loadSettings();
+      let favorites = loadFavorites();
       let activeMode = 0;
+      let activeTab = 'mixer';
       let playbackState = 'stopped'; // 'stopped' | 'playing' | 'stopping'
 
       // Audio graph state
@@ -1026,6 +1583,26 @@
       let currentSource = null;
       let stopTimerId = null;
 
+      // Now playing metadata
+      let currentTrackMeta = {
+        title: '音源未選択',
+        artist: 'ファイル / デモ / Audius',
+        artwork: PLACEHOLDER_ART_URI,
+        sourceType: 'none',
+        trackId: null
+      };
+
+      // Audius discovery & fetch state
+      let audiusHosts = null;
+      let audiusHostIndex = 0;
+      let audiusTracks = [];
+      let activePresetId = 'trending';
+      let hasInitializedAudius = false;
+      let loadingTrackId = null;
+      let activeListAbortController = null;
+      let activeStreamAbortController = null;
+      let audioLoadSeq = 0;
+
       // Exact dual-locked exponential playbackRate model
       let rateStartVal = 0;
       let rateTargetVal = 0;
@@ -1034,7 +1611,6 @@
       let anchorBufferOffset = 0;
 
       // Exact piecewise gain envelope model for click-free spin-down & recovery
-      // Each segment: { type: 'const'|'linear'|'exp', t0, v0, t1?, v1?, target?, tau? }
       let gainSegments = [{ type: 'const', t0: 0, v0: 0 }];
 
       // Visual animation state
@@ -1050,8 +1626,18 @@
         fileInput: document.getElementById('fileInput'),
         fileLabel: document.getElementById('fileLabel'),
         demoBtn: document.getElementById('demoBtn'),
+        nowPlayingArt: document.getElementById('nowPlayingArt'),
         trackName: document.getElementById('trackName'),
+        trackArtist: document.getElementById('trackArtist'),
         playStopBtn: document.getElementById('playStopBtn'),
+
+        tabMixerBtn: document.getElementById('tabMixerBtn'),
+        tabAudiusBtn: document.getElementById('tabAudiusBtn'),
+        tabFavBtn: document.getElementById('tabFavBtn'),
+        tabViewMixer: document.getElementById('tabViewMixer'),
+        tabViewAudius: document.getElementById('tabViewAudius'),
+        tabViewFavorites: document.getElementById('tabViewFavorites'),
+
         tachoArc: document.getElementById('tachoArc'),
         audioRing: document.getElementById('audioRing'),
         rotorGroup: document.getElementById('rotorGroup'),
@@ -1084,12 +1670,28 @@
         val3: document.getElementById('val3'),
         valTau: document.getElementById('valTau'),
         resetBtn: document.getElementById('resetBtn'),
+
+        audiusMiniRate: document.getElementById('audiusMiniRate'),
+        favMiniRate: document.getElementById('favMiniRate'),
+        miniModeBtns: Array.from(document.querySelectorAll('.mini-mode-btn')),
+        audiusSearchForm: document.getElementById('audiusSearchForm'),
+        audiusSearchInput: document.getElementById('audiusSearchInput'),
+        audiusSearchBtn: document.getElementById('audiusSearchBtn'),
+        audiusRandomBtn: document.getElementById('audiusRandomBtn'),
+        audiusChipsRow: document.getElementById('audiusChipsRow'),
+        audiusListStatus: document.getElementById('audiusListStatus'),
+        audiusTrackList: document.getElementById('audiusTrackList'),
+
+        favRandomBtn: document.getElementById('favRandomBtn'),
+        favListStatus: document.getElementById('favListStatus'),
+        favTrackList: document.getElementById('favTrackList'),
+
         audioStatusText: document.getElementById('audioStatusText'),
         keyDebug: document.getElementById('keyDebug'),
         keyDebugText: document.getElementById('keyDebugText')
       };
 
-      // ---------- Settings Persistence ----------
+      // ---------- Settings & Favorites Persistence ----------
       function cloneDefaults() {
         return {
           rates: { ...DEFAULTS.rates },
@@ -1131,6 +1733,90 @@
         try {
           localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
         } catch (_) {}
+      }
+
+      function sanitizeArtworkUrl(url) {
+        if (typeof url === 'string' && /^https:\/\//i.test(url.trim())) {
+          return url.trim();
+        }
+        return PLACEHOLDER_ART_URI;
+      }
+
+      function normalizeTrack(raw) {
+        if (!raw || !raw.id) return null;
+        const duration = Number(raw.duration);
+        return {
+          id: String(raw.id),
+          title: String(raw.title || 'Untitled Track'),
+          artist: String((raw.user && raw.user.name) || raw.artist || 'Unknown Artist'),
+          artwork: sanitizeArtworkUrl(
+            typeof raw.artwork === 'string'
+              ? raw.artwork
+              : (raw.artwork && (raw.artwork['150x150'] || raw.artwork['480x480'] || raw.artwork['1000x1000']))
+          ),
+          duration: Number.isFinite(duration) && duration >= 0 ? duration : 0
+        };
+      }
+
+      function loadFavorites() {
+        try {
+          const raw = localStorage.getItem(FAVORITES_STORAGE_KEY);
+          if (!raw) return [];
+          const parsed = JSON.parse(raw);
+          if (!Array.isArray(parsed)) return [];
+          return parsed.map(normalizeTrack).filter(Boolean);
+        } catch (_) {
+          return [];
+        }
+      }
+
+      function saveFavorites() {
+        try {
+          localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favorites));
+        } catch (_) {}
+      }
+
+      function isFavoriteTrack(trackId) {
+        return favorites.some((t) => t.id === String(trackId));
+      }
+
+      function toggleFavorite(track) {
+        const norm = normalizeTrack(track);
+        if (!norm) return;
+        const idx = favorites.findIndex((t) => t.id === norm.id);
+        if (idx >= 0) {
+          favorites.splice(idx, 1);
+        } else {
+          favorites.unshift({
+            id: norm.id,
+            title: norm.title,
+            artist: norm.artist,
+            artwork: norm.artwork,
+            duration: norm.duration
+          });
+        }
+        saveFavorites();
+        updateFavoritesUI();
+        renderTrackList(el.audiusTrackList, audiusTracks, el.audiusListStatus, '曲が見つかりませんでした');
+      }
+
+      // ---------- Focus & Keyboard Guard Helpers ----------
+      function blurActiveElement() {
+        try {
+          const ae = document.activeElement;
+          if (ae && ae !== document.body && typeof ae.blur === 'function') {
+            ae.blur();
+          }
+        } catch (_) {}
+      }
+
+      function isEditableElementActive() {
+        const ae = document.activeElement;
+        if (!ae) return false;
+        const tag = (ae.tagName || '').toUpperCase();
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return true;
+        if (ae.isContentEditable) return true;
+        return false;
       }
 
       // ---------- Exponential Rate & Integral Math ----------
@@ -1293,10 +1979,14 @@
           analyser.connect(masterGain);
           masterGain.connect(audioCtx.destination);
 
-          audioCtx.addEventListener('statechange', updateAudioStatusUI);
+          if (typeof audioCtx.addEventListener === 'function') {
+            audioCtx.addEventListener('statechange', updateAudioStatusUI);
+          } else {
+            audioCtx.onstatechange = updateAudioStatusUI;
+          }
         }
 
-        if (audioCtx.state !== 'running') {
+        if (audioCtx.state === 'suspended' || audioCtx.state === 'interrupted') {
           try {
             const res = audioCtx.resume();
             if (res && typeof res.then === 'function') {
@@ -1307,7 +1997,7 @@
 
         if (!isAudioUnlocked) {
           try {
-            const silent = audioCtx.createBuffer(1, 1, audioCtx.sampleRate);
+            const silent = audioCtx.createBuffer(1, 1, audioCtx.sampleRate || 44100);
             const src = audioCtx.createBufferSource();
             src.buffer = silent;
             src.connect(audioCtx.destination);
@@ -1321,18 +2011,33 @@
       }
 
       function decodeAudioDataSafe(ctx, arrayBuffer) {
+        if (!arrayBuffer || arrayBuffer.byteLength === 0) {
+          return Promise.reject(new Error('音声データが空です'));
+        }
         return new Promise((resolve, reject) => {
+          let settled = false;
+          const finishOk = (decoded) => {
+            if (settled) return;
+            settled = true;
+            resolve(decoded);
+          };
+          const finishErr = (err) => {
+            if (settled) return;
+            settled = true;
+            reject(err || new Error('音声データのデコードに失敗しました'));
+          };
+
           try {
             const maybePromise = ctx.decodeAudioData(
               arrayBuffer,
-              (decoded) => resolve(decoded),
-              (err) => reject(err || new Error('音声データのデコードに失敗しました'))
+              finishOk,
+              finishErr
             );
             if (maybePromise && typeof maybePromise.then === 'function') {
-              maybePromise.then(resolve, reject);
+              maybePromise.then(finishOk, finishErr);
             }
           } catch (err) {
-            reject(err);
+            finishErr(err);
           }
         });
       }
@@ -1340,7 +2045,7 @@
       // ---------- Built-in Demo Groove Synthesizer ----------
       function createDemoBuffer(ctx) {
         const sr = ctx.sampleRate || 44100;
-        const duration = 4.0; // 120 BPM, 2 bars (8 beats)
+        const duration = 4.0;
         const length = Math.floor(sr * duration);
         const buf = ctx.createBuffer(2, length, sr);
         const left = buf.getChannelData(0);
@@ -1351,7 +2056,6 @@
         const bassFreqs = [55.0, 55.0, 110.0, 65.41, 73.42, 73.42, 146.83, 82.41];
         const chordRoots = [220.0, 220.0, 261.63, 293.66];
 
-        // Deterministic PRNG for hi-hat texture so demo is reproducible
         let noiseSeed = 1337;
         const nextNoise = () => {
           noiseSeed = (noiseSeed * 1664525 + 1013904223) >>> 0;
@@ -1366,18 +2070,15 @@
           const eighthLocal = t - eighthIdx * eighthDur;
           const barBeat = beatIdx % 4;
 
-          // Punchy kick on every beat
           const kickFreq = 46 + 115 * Math.exp(-beatLocal * 28);
           const kickEnv = Math.exp(-beatLocal * 11);
           const kick = Math.sin(2 * Math.PI * kickFreq * beatLocal) * kickEnv * 0.55;
 
-          // Off-beat crisp hi-hat
           const isOffHat = eighthIdx % 2 === 1;
           const hatEnv = isOffHat ? Math.exp(-eighthLocal * 38) : Math.exp(-eighthLocal * 65) * 0.25;
           const hatRaw = nextNoise();
           const hat = hatRaw * hatEnv * 0.16;
 
-          // Octave synth bass on 8th notes
           const bassF = bassFreqs[eighthIdx % bassFreqs.length];
           const bassEnv = Math.exp(-eighthLocal * 7.5);
           const bassWave =
@@ -1386,7 +2087,6 @@
             Math.sin(6 * Math.PI * bassF * t) * 0.10;
           const bass = bassWave * bassEnv * 0.34;
 
-          // Melodic chord stab (minor 7th feel) so pitch bend is crystal clear
           const root = chordRoots[Math.floor(beatIdx / 2) % chordRoots.length];
           const stabLocal = beatLocal;
           const stabEnv = (barBeat === 0 || barBeat === 2 ? 0.24 : 0.14) * Math.exp(-stabLocal * 4.5);
@@ -1399,7 +2099,6 @@
             0.7 * Math.sin(2 * Math.PI * (root * 1.1892) * t + 0.55) +
             0.6 * Math.sin(2 * Math.PI * (root * 1.4983) * t + 0.75);
 
-          // Soft seam fade (3ms) at loop boundaries for clickless looping
           let seam = 1;
           const fadeSamples = Math.floor(sr * 0.003);
           if (i < fadeSamples) seam = i / fadeSamples;
@@ -1412,7 +2111,7 @@
         return buf;
       }
 
-      // ---------- Playback & Motor Control ----------
+      // ---------- Playback, Resource Cleanup & Unified Buffer Loader ----------
       function clearStopTimer() {
         if (stopTimerId !== null) {
           clearTimeout(stopTimerId);
@@ -1436,6 +2135,41 @@
         try {
           source.disconnect();
         } catch (_) {}
+      }
+
+      function releaseAudioResources() {
+        immediateStop(true);
+        audioBuffer = null;
+      }
+
+      function loadDecodedBuffer(decoded, meta, options = {}) {
+        const { autoStart = false, forcePlayFromStandstill = false } = options;
+        immediateStop(true);
+        audioBuffer = decoded;
+        isDemoLoaded = meta.sourceType === 'demo';
+        el.demoBtn.classList.toggle('active', isDemoLoaded);
+
+        currentTrackMeta = {
+          title: meta.title || 'Untitled',
+          artist: meta.artist || '',
+          artwork: sanitizeArtworkUrl(meta.artwork),
+          sourceType: meta.sourceType || 'local',
+          trackId: meta.trackId ? String(meta.trackId) : null
+        };
+
+        updateNowPlayingUI();
+        setStatusOverride(`再生準備完了 (${formatTime(decoded.duration)})`, 'ok', 2600);
+
+        if (forcePlayFromStandstill) {
+          if (activeMode === 0 && settings.zeroBehavior === 'stop') {
+            activeMode = 1;
+          }
+          startPlaybackFromStandstill(getTargetRateForMode(activeMode));
+        } else if (autoStart && !(activeMode === 0 && settings.zeroBehavior === 'stop')) {
+          startPlaybackFromStandstill(getTargetRateForMode(activeMode));
+        } else {
+          updateUI();
+        }
       }
 
       function finalizeSpinDownStop(expectedSource) {
@@ -1516,7 +2250,9 @@
         if (!settings.isLooping && anchorBufferOffset >= audioBuffer.duration - 0.02) {
           anchorBufferOffset = 0;
         }
-        const startOffset = normalizeBufferOffset(anchorBufferOffset, audioBuffer.duration, settings.isLooping);
+        let startOffset = normalizeBufferOffset(anchorBufferOffset, audioBuffer.duration, settings.isLooping);
+        // Clamp slightly below exact duration to prevent boundary errors on Firefox
+        startOffset = Math.max(0, Math.min(startOffset, Math.max(0, audioBuffer.duration - 0.001)));
         anchorBufferOffset = startOffset;
 
         const src = ctx.createBufferSource();
@@ -1551,7 +2287,6 @@
         rateStartTime = now;
         rateTau = safeTau;
 
-        // Smooth 40ms click-free fade-in
         motorGain.gain.cancelScheduledValues(now);
         motorGain.gain.setValueAtTime(0, now);
         motorGain.gain.linearRampToValueAtTime(1.0, now + 0.04);
@@ -1597,7 +2332,7 @@
           updateUI();
           if (mode !== 0 && sourceTag === 'pad') {
             pulseAudioButtons();
-            setStatusOverride('「音源」または「デモ」を選んでください', 'warn', 2600);
+            setStatusOverride('「音源」「デモ」またはAudiusから曲を選んでください', 'warn', 2600);
           }
           return;
         }
@@ -1616,7 +2351,6 @@
         if (playbackState === 'stopped') {
           startPlaybackFromStandstill(targetRate);
         } else {
-          // Recover smoothly whether currently 'playing' or mid-'stopping'
           clearStopTimer();
           playbackState = 'playing';
           const now = audioCtx.currentTime;
@@ -1630,12 +2364,11 @@
         ensureAudioContext();
         if (!audioBuffer) {
           pulseAudioButtons();
-          setStatusOverride('先に「音源」または「デモ」を読み込んでください', 'warn', 2800);
+          setStatusOverride('先に「音源」「デモ」またはAudiusから曲を選んでください', 'warn', 2800);
           return;
         }
 
         if (playbackState === 'playing') {
-          // Quick 40ms fade-out and stop cleanly
           clearStopTimer();
           const now = audioCtx.currentTime;
           const curGain = getCurrentMotorGain(now);
@@ -1653,7 +2386,6 @@
           return;
         }
 
-        // Stopped or mid-spin-down -> start or resume
         if (activeMode === 0 && settings.zeroBehavior === 'stop') {
           activeMode = 1;
         }
@@ -1669,37 +2401,52 @@
         }
       }
 
-      // ---------- File Loading & Demo Loading ----------
+      // ---------- Local File Loading & Demo Loading ----------
+      function abortInFlightStreamLoad() {
+        if (activeStreamAbortController) {
+          try {
+            activeStreamAbortController.abort();
+          } catch (_) {}
+          activeStreamAbortController = null;
+        }
+        loadingTrackId = null;
+      }
+
       async function handleFileSelection(file) {
         if (!file) return;
         const ctx = ensureAudioContext();
         if (!ctx) return;
 
+        const loadId = ++audioLoadSeq;
+        abortInFlightStreamLoad();
+
         el.trackName.textContent = `読込中: ${file.name}`;
         el.trackName.classList.remove('loaded');
-        setStatusOverride('音声をデコード中...', 'warn', 10000);
+        el.trackArtist.textContent = 'ローカルファイル';
+        setStatusOverride('音声をデコード中...', 'warn', 15000);
 
         try {
+          releaseAudioResources();
           const arrayBuf = await readFileAsArrayBuffer(file);
+          if (loadId !== audioLoadSeq) return;
           const decoded = await decodeAudioDataSafe(ctx, arrayBuf);
+          if (loadId !== audioLoadSeq) return;
 
-          immediateStop(true);
-          audioBuffer = decoded;
-          isDemoLoaded = false;
-          el.demoBtn.classList.remove('active');
-          el.trackName.textContent = file.name;
-          el.trackName.classList.add('loaded');
-          setStatusOverride(`読込完了 (${formatTime(decoded.duration)})`, 'ok', 2500);
-
-          // If user already chose an active speed mode (1..3 or normal 0), start playing immediately
-          if (!(activeMode === 0 && settings.zeroBehavior === 'stop')) {
-            startPlaybackFromStandstill(getTargetRateForMode(activeMode));
-          } else {
-            updateUI();
-          }
+          loadDecodedBuffer(
+            decoded,
+            {
+              title: file.name,
+              artist: 'ローカルファイル',
+              artwork: PLACEHOLDER_ART_URI,
+              sourceType: 'local',
+              trackId: null
+            },
+            { autoStart: true }
+          );
         } catch (err) {
-          el.trackName.textContent = audioBuffer ? el.trackName.textContent : '読込エラー';
-          setStatusOverride('音声のデコードに失敗しました', 'err', 4500);
+          if (loadId !== audioLoadSeq) return;
+          updateNowPlayingUI();
+          setStatusOverride(`音声のデコードに失敗しました (${err && err.message ? err.message : '非対応形式'})`, 'err', 4500);
         }
       }
 
@@ -1719,18 +2466,601 @@
         const ctx = ensureAudioContext();
         if (!ctx) return;
 
-        immediateStop(true);
-        audioBuffer = createDemoBuffer(ctx);
-        isDemoLoaded = true;
-        el.demoBtn.classList.add('active');
-        el.trackName.textContent = 'Demo Synth Groove (120 BPM)';
-        el.trackName.classList.add('loaded');
-        setStatusOverride('デモ音源をロードしました', 'ok', 2200);
+        ++audioLoadSeq;
+        abortInFlightStreamLoad();
+        releaseAudioResources();
 
-        if (activeMode === 0 && settings.zeroBehavior === 'stop') {
-          activeMode = 1;
+        const buf = createDemoBuffer(ctx);
+        loadDecodedBuffer(
+          buf,
+          {
+            title: 'Demo Synth Groove (120 BPM)',
+            artist: '内蔵デモ音源',
+            artwork: PLACEHOLDER_ART_URI,
+            sourceType: 'demo',
+            trackId: null
+          },
+          { forcePlayFromStandstill: true }
+        );
+        renderCurrentLists();
+      }
+
+      // ---------- Audius API Discovery, Search, Stream & Retry ----------
+      function makeAbortError() {
+        const err = new Error('Aborted');
+        err.name = 'AbortError';
+        return err;
+      }
+
+      function normalizeHostUrl(raw) {
+        if (typeof raw !== 'string') return null;
+        const trimmed = raw.trim().replace(/\/+$/, '');
+        if (!/^https:\/\//i.test(trimmed)) return null;
+        return trimmed;
+      }
+
+      function shuffleArray(arr) {
+        const copy = arr.slice();
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const tmp = copy[i];
+          copy[i] = copy[j];
+          copy[j] = tmp;
         }
-        startPlaybackFromStandstill(getTargetRateForMode(activeMode));
+        return copy;
+      }
+
+      async function getAudiusHosts(signal) {
+        if (Array.isArray(audiusHosts) && audiusHosts.length > 0) {
+          return audiusHosts;
+        }
+        try {
+          const res = await fetch(AUDIUS_DISCOVERY_API, {
+            mode: 'cors',
+            redirect: 'follow',
+            signal
+          });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const json = await res.json();
+          const rawList = Array.isArray(json && json.data) ? json.data : [];
+          const unique = [];
+          const seen = new Set();
+          for (const item of rawList) {
+            const norm = normalizeHostUrl(item);
+            if (norm && !seen.has(norm)) {
+              seen.add(norm);
+              unique.push(norm);
+            }
+          }
+          const shuffled = shuffleArray(unique);
+          if (!seen.has(AUDIUS_FALLBACK_HOST)) {
+            shuffled.push(AUDIUS_FALLBACK_HOST);
+          }
+          audiusHosts = shuffled.length > 0 ? shuffled : [AUDIUS_FALLBACK_HOST];
+          audiusHostIndex = 0;
+          return audiusHosts;
+        } catch (err) {
+          if (err && err.name === 'AbortError') throw err;
+          audiusHosts = [AUDIUS_FALLBACK_HOST];
+          audiusHostIndex = 0;
+          return audiusHosts;
+        }
+      }
+
+      function buildHostCandidates(hosts, maxAttempts) {
+        const list = Array.isArray(hosts) && hosts.length > 0 ? hosts : [AUDIUS_FALLBACK_HOST];
+        const out = [];
+        const seen = new Set();
+        const start = audiusHostIndex % list.length;
+        for (let i = 0; i < list.length && out.length < maxAttempts; i++) {
+          const h = list[(start + i) % list.length];
+          if (!seen.has(h)) {
+            seen.add(h);
+            out.push(h);
+          }
+        }
+        if (!seen.has(AUDIUS_FALLBACK_HOST)) {
+          if (out.length >= maxAttempts) {
+            out[out.length - 1] = AUDIUS_FALLBACK_HOST;
+          } else {
+            out.push(AUDIUS_FALLBACK_HOST);
+          }
+        }
+        return out;
+      }
+
+      async function fetchAudiusJson(buildUrl, signal) {
+        const hosts = await getAudiusHosts(signal);
+        // Initial attempt + up to 3 fallbacks = max 4 attempts
+        const candidates = buildHostCandidates(hosts, 4);
+        let lastErr = null;
+
+        for (let i = 0; i < candidates.length; i++) {
+          if (signal && signal.aborted) throw makeAbortError();
+          const host = candidates[i];
+          const url = buildUrl(host);
+          try {
+            const res = await fetch(url, {
+              mode: 'cors',
+              redirect: 'follow',
+              signal
+            });
+            if (!res.ok) {
+              throw new Error(`HTTP ${res.status}`);
+            }
+            const json = await res.json();
+            if (!json || typeof json !== 'object') {
+              throw new Error('不正なAPIレスポンスです');
+            }
+            const idx = hosts.indexOf(host);
+            if (idx >= 0) audiusHostIndex = idx;
+            return json;
+          } catch (err) {
+            if (err && err.name === 'AbortError') throw err;
+            lastErr = err;
+          }
+        }
+        throw lastErr || new Error('Audius APIへの接続に失敗しました');
+      }
+
+      function filterPlayableTracks(rawData) {
+        if (!Array.isArray(rawData)) return [];
+        const result = [];
+        for (const t of rawData) {
+          if (!t || !t.id) continue;
+          if (t.is_streamable === false) continue;
+          if (t.access && t.access.stream === false) continue;
+          if (t.stream_conditions != null) continue;
+          const norm = normalizeTrack(t);
+          if (norm) result.push(norm);
+        }
+        return result;
+      }
+
+      async function fetchTrendingByPreset(preset) {
+        if (activeListAbortController) {
+          try {
+            activeListAbortController.abort();
+          } catch (_) {}
+        }
+        const controller = new AbortController();
+        activeListAbortController = controller;
+
+        activePresetId = preset.id;
+        renderPresetChips();
+        setListStatus(el.audiusListStatus, `${preset.label} を取得中...`, '');
+
+        try {
+          const json = await fetchAudiusJson((host) => {
+            const genreParam = preset.genre ? `genre=${encodeURIComponent(preset.genre)}&` : '';
+            return `${host}/v1/tracks/trending?${genreParam}time=week&app_name=${AUDIUS_APP_NAME}`;
+          }, controller.signal);
+
+          if (controller.signal.aborted) return;
+
+          let tracks = filterPlayableTracks(json.data);
+          // If a specific genre label returns empty on trending, fall back to search query
+          if (tracks.length === 0 && preset.fallbackQuery) {
+            const fallbackJson = await fetchAudiusJson(
+              (host) => `${host}/v1/tracks/search?query=${encodeURIComponent(preset.fallbackQuery)}&app_name=${AUDIUS_APP_NAME}`,
+              controller.signal
+            );
+            if (controller.signal.aborted) return;
+            tracks = filterPlayableTracks(fallbackJson.data);
+          }
+
+          audiusTracks = tracks;
+          renderTrackList(el.audiusTrackList, audiusTracks, el.audiusListStatus, '再生可能な楽曲が見つかりませんでした');
+          setListStatus(
+            el.audiusListStatus,
+            `${preset.label}: ${tracks.length}曲`,
+            tracks.length > 0 ? 'ok' : ''
+          );
+        } catch (err) {
+          if (err && err.name === 'AbortError') return;
+          audiusTracks = [];
+          renderTrackList(el.audiusTrackList, audiusTracks, el.audiusListStatus, '楽曲リストを取得できませんでした');
+          setListStatus(el.audiusListStatus, `取得エラー: ${err && err.message ? err.message : '通信に失敗しました'}`, 'err');
+        }
+      }
+
+      async function searchAudiusTracks(query) {
+        const trimmed = (query || '').trim();
+        if (!trimmed) {
+          const preset = PRESET_GENRES.find((p) => p.id === activePresetId) || PRESET_GENRES[0];
+          return fetchTrendingByPreset(preset);
+        }
+
+        if (activeListAbortController) {
+          try {
+            activeListAbortController.abort();
+          } catch (_) {}
+        }
+        const controller = new AbortController();
+        activeListAbortController = controller;
+
+        activePresetId = '';
+        renderPresetChips();
+        setListStatus(el.audiusListStatus, `「${trimmed}」を検索中...`, '');
+
+        try {
+          const json = await fetchAudiusJson(
+            (host) => `${host}/v1/tracks/search?query=${encodeURIComponent(trimmed)}&app_name=${AUDIUS_APP_NAME}`,
+            controller.signal
+          );
+          if (controller.signal.aborted) return;
+
+          audiusTracks = filterPlayableTracks(json.data);
+          renderTrackList(el.audiusTrackList, audiusTracks, el.audiusListStatus, '該当する再生可能な楽曲がありません');
+          setListStatus(
+            el.audiusListStatus,
+            `検索結果: ${audiusTracks.length}曲`,
+            audiusTracks.length > 0 ? 'ok' : ''
+          );
+        } catch (err) {
+          if (err && err.name === 'AbortError') return;
+          audiusTracks = [];
+          renderTrackList(el.audiusTrackList, audiusTracks, el.audiusListStatus, '検索に失敗しました');
+          setListStatus(el.audiusListStatus, `検索エラー: ${err && err.message ? err.message : '通信に失敗しました'}`, 'err');
+        }
+      }
+
+      async function readResponseWithProgress(res, signal, onProgress) {
+        const totalHeader = res.headers && typeof res.headers.get === 'function'
+          ? res.headers.get('content-length')
+          : null;
+        const totalBytes = totalHeader ? parseInt(totalHeader, 10) : 0;
+
+        if (!res.body || typeof res.body.getReader !== 'function') {
+          const buf = await res.arrayBuffer();
+          onProgress(100, buf.byteLength, buf.byteLength);
+          return buf;
+        }
+
+        const reader = res.body.getReader();
+        const chunks = [];
+        let loadedBytes = 0;
+
+        while (true) {
+          if (signal && signal.aborted) {
+            try {
+              await reader.cancel();
+            } catch (_) {}
+            throw makeAbortError();
+          }
+          const { done, value } = await reader.read();
+          if (done) break;
+          if (value && value.byteLength > 0) {
+            chunks.push(value);
+            loadedBytes += value.byteLength;
+            const pct = totalBytes > 0 ? Math.min(100, Math.round((loadedBytes / totalBytes) * 100)) : null;
+            onProgress(pct, loadedBytes, totalBytes);
+          }
+        }
+
+        const merged = new Uint8Array(loadedBytes);
+        let offset = 0;
+        for (const chunk of chunks) {
+          merged.set(chunk, offset);
+          offset += chunk.byteLength;
+        }
+        return merged.buffer;
+      }
+
+      async function fetchAudiusStreamBuffer(trackId, signal, onProgress) {
+        const hosts = await getAudiusHosts(signal);
+        // Initial attempt + up to 2 automatic retries on different cached nodes = max 3 attempts
+        const candidates = buildHostCandidates(hosts, 3);
+        let lastErr = null;
+
+        for (let i = 0; i < candidates.length; i++) {
+          if (signal && signal.aborted) throw makeAbortError();
+          const host = candidates[i];
+          const streamUrl = `${host}/v1/tracks/${encodeURIComponent(trackId)}/stream?app_name=${AUDIUS_APP_NAME}`;
+          try {
+            const res = await fetch(streamUrl, {
+              mode: 'cors',
+              redirect: 'follow',
+              signal
+            });
+            if (!res.ok) {
+              throw new Error(`HTTP ${res.status}`);
+            }
+            const buf = await readResponseWithProgress(res, signal, onProgress);
+            if (!buf || buf.byteLength === 0) {
+              throw new Error('音声ストリームが空でした');
+            }
+            const idx = hosts.indexOf(host);
+            if (idx >= 0) audiusHostIndex = idx;
+            return buf;
+          } catch (err) {
+            if (err && err.name === 'AbortError') throw err;
+            lastErr = err;
+            if (i + 1 < candidates.length) {
+              setStatusOverride(`別ノードで再試行中 (${i + 2}/${candidates.length})...`, 'warn', 10000);
+            }
+          }
+        }
+        throw lastErr || new Error('音声ストリームの取得に失敗しました');
+      }
+
+      async function loadAudiusTrack(track) {
+        // Must run synchronously at the very start of the tap handler before any await/fetch
+        const ctx = ensureAudioContext();
+        blurActiveElement();
+
+        if (!track || !track.id) return;
+        if (!ctx) return;
+
+        if (Number(track.duration) > MAX_AUDIUS_DURATION_SEC) {
+          const msg = '15分以上の曲はメモリ保護のため非対応です';
+          setStatusOverride(msg, 'err', 4500);
+          setListStatus(el.audiusListStatus, msg, 'err');
+          setListStatus(el.favListStatus, msg, 'err');
+          return;
+        }
+
+        const loadId = ++audioLoadSeq;
+        abortInFlightStreamLoad();
+
+        const controller = new AbortController();
+        activeStreamAbortController = controller;
+        loadingTrackId = track.id;
+
+        // Free previous playback & AudioBuffer before downloading/decoding next track
+        releaseAudioResources();
+
+        currentTrackMeta = {
+          title: track.title,
+          artist: track.artist,
+          artwork: sanitizeArtworkUrl(track.artwork),
+          sourceType: 'audius',
+          trackId: track.id
+        };
+        updateNowPlayingUI(true);
+        renderCurrentLists();
+
+        const startMsg = `ダウンロード中 0% — ${track.title}`;
+        setStatusOverride(startMsg, 'warn', 60000);
+        setListStatus(el.audiusListStatus, 'ダウンロード準備中...', '');
+        setListStatus(el.favListStatus, 'ダウンロード準備中...', '');
+
+        try {
+          const arrayBuf = await fetchAudiusStreamBuffer(track.id, controller.signal, (pct, loadedBytes) => {
+            if (loadId !== audioLoadSeq || controller.signal.aborted) return;
+            const label = pct !== null
+              ? `ダウンロード中 ${pct}%`
+              : `ダウンロード中 ${(loadedBytes / (1024 * 1024)).toFixed(1)}MB`;
+            setStatusOverride(label, 'warn', 60000);
+          });
+
+          if (loadId !== audioLoadSeq || controller.signal.aborted) return;
+
+          setStatusOverride('デコード中...', 'warn', 30000);
+          const decoded = await decodeAudioDataSafe(ctx, arrayBuf);
+
+          if (loadId !== audioLoadSeq || controller.signal.aborted) return;
+
+          if (decoded.duration > MAX_AUDIUS_DURATION_SEC) {
+            const msg = '15分以上の曲はメモリ保護のため非対応です';
+            setStatusOverride(msg, 'err', 4500);
+            setListStatus(el.audiusListStatus, msg, 'err');
+            setListStatus(el.favListStatus, msg, 'err');
+            return;
+          }
+
+          loadDecodedBuffer(
+            decoded,
+            {
+              title: track.title,
+              artist: track.artist,
+              artwork: track.artwork,
+              sourceType: 'audius',
+              trackId: track.id
+            },
+            { forcePlayFromStandstill: true }
+          );
+
+          setListStatus(el.audiusListStatus, `再生準備完了: ${track.title}`, 'ok');
+          setListStatus(el.favListStatus, `再生準備完了: ${track.title}`, 'ok');
+        } catch (err) {
+          if (err && err.name === 'AbortError') return;
+          if (loadId !== audioLoadSeq) return;
+          const reason = err && err.message ? err.message : '通信またはデコードエラー';
+          const errMsg = `読込失敗: ${reason}`;
+          setStatusOverride(errMsg, 'err', 5000);
+          setListStatus(el.audiusListStatus, errMsg, 'err');
+          setListStatus(el.favListStatus, errMsg, 'err');
+        } finally {
+          if (loadId === audioLoadSeq) {
+            loadingTrackId = null;
+            if (activeStreamAbortController === controller) {
+              activeStreamAbortController = null;
+            }
+            updateNowPlayingUI(false);
+            renderCurrentLists();
+          }
+        }
+      }
+
+      function pickRandomTrackFromList(list, statusEl) {
+        ensureAudioContext();
+        blurActiveElement();
+
+        const playable = (list || []).filter((t) => Number(t.duration) <= MAX_AUDIUS_DURATION_SEC);
+        if (playable.length === 0) {
+          setListStatus(statusEl, '再生可能な15分未満の曲がリストにありません', 'err');
+          return;
+        }
+        let pool = playable;
+        if (playable.length > 1 && currentTrackMeta.trackId) {
+          const withoutCurrent = playable.filter((t) => t.id !== currentTrackMeta.trackId);
+          if (withoutCurrent.length > 0) pool = withoutCurrent;
+        }
+        const chosen = pool[Math.floor(Math.random() * pool.length)];
+        loadAudiusTrack(chosen);
+      }
+
+      // ---------- UI Rendering (Strict XSS-Safe DOM Construction) ----------
+      function setListStatus(node, msg, level) {
+        if (!node) return;
+        node.textContent = msg || '';
+        node.className = `list-status ${level || ''}`.trim();
+      }
+
+      function renderPresetChips() {
+        el.audiusChipsRow.textContent = '';
+        for (const preset of PRESET_GENRES) {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = `chip-btn${activePresetId === preset.id ? ' is-active' : ''}`;
+          btn.textContent = preset.label;
+          btn.addEventListener('click', () => {
+            ensureAudioContext();
+            blurActiveElement();
+            el.audiusSearchInput.value = '';
+            fetchTrendingByPreset(preset);
+          });
+          el.audiusChipsRow.appendChild(btn);
+        }
+      }
+
+      function renderTrackList(container, tracks, statusEl, emptyMessage) {
+        container.textContent = '';
+        if (!Array.isArray(tracks) || tracks.length === 0) {
+          const emptyDiv = document.createElement('div');
+          emptyDiv.className = 'empty-state';
+          emptyDiv.textContent = emptyMessage;
+          container.appendChild(emptyDiv);
+          return;
+        }
+
+        const frag = document.createDocumentFragment();
+        for (const track of tracks) {
+          const isTooLong = Number(track.duration) > MAX_AUDIUS_DURATION_SEC;
+          const isLoading = loadingTrackId === track.id;
+          const isCurrent = !isLoading && currentTrackMeta.sourceType === 'audius' && currentTrackMeta.trackId === track.id;
+          const isFav = isFavoriteTrack(track.id);
+
+          const row = document.createElement('div');
+          row.className = 'track-row';
+          row.setAttribute('role', 'listitem');
+          row.tabIndex = 0;
+          if (isCurrent) row.classList.add('is-playing');
+          if (isLoading) row.classList.add('is-loading');
+          if (isTooLong) row.classList.add('is-too-long');
+
+          const img = document.createElement('img');
+          img.className = 'row-art';
+          img.alt = '';
+          img.loading = 'lazy';
+          img.src = sanitizeArtworkUrl(track.artwork);
+          img.addEventListener('error', () => {
+            if (img.src !== PLACEHOLDER_ART_URI) img.src = PLACEHOLDER_ART_URI;
+          });
+
+          const main = document.createElement('div');
+          main.className = 'row-main';
+
+          const titleEl = document.createElement('div');
+          titleEl.className = 'row-title';
+          titleEl.textContent = track.title;
+
+          const subEl = document.createElement('div');
+          subEl.className = 'row-sub';
+
+          const artistEl = document.createElement('span');
+          artistEl.className = 'row-artist';
+          artistEl.textContent = track.artist;
+
+          const durEl = document.createElement('span');
+          durEl.className = 'row-dur';
+          durEl.textContent = formatTime(track.duration);
+
+          subEl.appendChild(artistEl);
+          if (isTooLong) {
+            const warnBadge = document.createElement('span');
+            warnBadge.className = 'row-warn-badge';
+            warnBadge.textContent = '15分超';
+            subEl.appendChild(warnBadge);
+          }
+          subEl.appendChild(durEl);
+
+          main.appendChild(titleEl);
+          main.appendChild(subEl);
+
+          const favBtn = document.createElement('button');
+          favBtn.type = 'button';
+          favBtn.className = `fav-btn${isFav ? ' is-fav' : ''}`;
+          favBtn.setAttribute('aria-label', isFav ? 'お気に入り解除' : 'お気に入り追加');
+          favBtn.textContent = isFav ? '★' : '☆';
+          favBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            ensureAudioContext();
+            blurActiveElement();
+            toggleFavorite(track);
+          });
+
+          const triggerSelect = () => {
+            loadAudiusTrack(track);
+          };
+
+          row.addEventListener('click', triggerSelect);
+          row.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              triggerSelect();
+            }
+          });
+
+          row.appendChild(img);
+          row.appendChild(main);
+          row.appendChild(favBtn);
+          frag.appendChild(row);
+        }
+
+        container.appendChild(frag);
+      }
+
+      function updateFavoritesUI() {
+        el.tabFavBtn.textContent = `★ お気に入り (${favorites.length})`;
+        renderTrackList(
+          el.favTrackList,
+          favorites,
+          el.favListStatus,
+          'お気に入りはまだありません。Audiusタブの「☆」ボタンで保存できます。'
+        );
+      }
+
+      function renderCurrentLists() {
+        renderTrackList(el.audiusTrackList, audiusTracks, el.audiusListStatus, '再生可能な楽曲が見つかりませんでした');
+        updateFavoritesUI();
+      }
+
+      function switchTab(tabName) {
+        ensureAudioContext();
+        blurActiveElement();
+        activeTab = tabName;
+
+        el.tabMixerBtn.classList.toggle('is-active', tabName === 'mixer');
+        el.tabAudiusBtn.classList.toggle('is-active', tabName === 'audius');
+        el.tabFavBtn.classList.toggle('is-active', tabName === 'favorites');
+
+        el.tabViewMixer.classList.toggle('is-hidden', tabName !== 'mixer');
+        el.tabViewAudius.classList.toggle('is-hidden', tabName !== 'audius');
+        el.tabViewFavorites.classList.toggle('is-hidden', tabName !== 'favorites');
+
+        if (tabName === 'audius' && !hasInitializedAudius) {
+          hasInitializedAudius = true;
+          fetchTrendingByPreset(PRESET_GENRES[0]);
+        }
+      }
+
+      function updateNowPlayingUI(isLoadingNow = false) {
+        el.nowPlayingArt.src = sanitizeArtworkUrl(currentTrackMeta.artwork);
+        el.trackName.textContent = isLoadingNow ? `読込中: ${currentTrackMeta.title}` : currentTrackMeta.title;
+        el.trackName.classList.toggle('loaded', Boolean(audioBuffer) && !isLoadingNow);
+        el.trackArtist.textContent = currentTrackMeta.artist || '';
       }
 
       // ---------- UI Helpers ----------
@@ -1809,10 +3139,14 @@
         updateActiveAccentCss();
         updateAudioStatusUI();
 
-        // Mode pads active & labels
         el.pads[0].classList.toggle('is-normal-zero', settings.zeroBehavior === 'normal');
         for (let m = 0; m < 4; m++) {
           el.pads[m].classList.toggle('is-active', activeMode === m);
+        }
+
+        for (const btn of el.miniModeBtns) {
+          const m = Number(btn.getAttribute('data-mini-mode'));
+          btn.classList.toggle('is-active', m === activeMode);
         }
 
         el.padRates[0].textContent = settings.zeroBehavior === 'normal' ? '1.00x' : '減速停止';
@@ -1820,7 +3154,6 @@
         el.padRates[2].textContent = `${settings.rates[2].toFixed(2)}x`;
         el.padRates[3].textContent = `${settings.rates[3].toFixed(2)}x`;
 
-        // Active mode badge & target
         const meta = MODE_META[activeMode];
         el.activeModeBadge.textContent = `[${activeMode}] ${meta.ja} / ${meta.en}`;
         if (activeMode === 0 && settings.zeroBehavior === 'stop') {
@@ -1829,12 +3162,10 @@
           el.targetRateText.textContent = `TARGET: ${getTargetRateForMode(activeMode).toFixed(2)}x`;
         }
 
-        // Play/Stop button
         const isPlayVisual = playbackState === 'playing';
         el.playStopBtn.textContent = isPlayVisual ? '■' : '▶';
         el.playStopBtn.classList.toggle('is-playing', isPlayVisual);
 
-        // Toggle pills
         el.loopToggleBtn.textContent = settings.isLooping ? 'LOOP: ON' : 'LOOP: OFF';
         el.loopToggleBtn.classList.toggle('is-on', settings.isLooping);
 
@@ -1848,7 +3179,6 @@
           el.zeroModeToggleBtn.classList.remove('zero-normal');
         }
 
-        // Sliders sync
         el.slider1.value = settings.rates[1].toFixed(2);
         el.slider2.value = settings.rates[2].toFixed(2);
         el.slider3.value = settings.rates[3].toFixed(2);
@@ -1868,23 +3198,23 @@
         const audioNow = audioCtx ? audioCtx.currentTime : 0;
         const currentRate = playbackState === 'stopped' ? 0 : getCurrentRate(audioNow);
 
-        // Digital live rate readout
-        el.liveRateText.textContent = currentRate.toFixed(2);
+        const rateStr = currentRate.toFixed(2);
+        el.liveRateText.textContent = rateStr;
+        const miniText = `[${activeMode} ${MODE_META[activeMode].ja}] ${rateStr}x`;
+        el.audiusMiniRate.textContent = miniText;
+        el.favMiniRate.textContent = miniText;
 
-        // Tachometer arc & needle (0.0x -> -135 deg, 3.0x -> +135 deg)
         const ratio = clamp(currentRate / TACHO_MAX_RATE, 0, 1);
         const dashOffset = TACHO_ARC_LEN * (1 - ratio);
         el.tachoArc.setAttribute('stroke-dashoffset', dashOffset.toFixed(1));
         const needleDeg = -135 + ratio * 270;
         el.needleGroup.setAttribute('transform', `rotate(${needleDeg.toFixed(1)} 60 60)`);
 
-        // Spinning platter angle proportional to instantaneous playbackRate
         if (currentRate > 0.002) {
           rotorAngle = (rotorAngle + currentRate * dtPerf * 240) % 360;
           el.rotorGroup.setAttribute('transform', `rotate(${rotorAngle.toFixed(1)} 60 60)`);
         }
 
-        // Live audio output level ring via AnalyserNode
         let level = 0;
         if (analyser && analyserData && playbackState !== 'stopped') {
           analyser.getByteTimeDomainData(analyserData);
@@ -1898,7 +3228,6 @@
         }
         el.audioRing.setAttribute('stroke-dashoffset', (RING_LEN * (1 - level)).toFixed(1));
 
-        // Track progress & time
         if (audioBuffer) {
           const pos = getLiveBufferOffset(audioNow);
           const dur = audioBuffer.duration;
@@ -1926,6 +3255,7 @@
             rampPlaybackRate(val, Math.min(settings.inertiaTau, 0.04));
           }
         });
+        sliderEl.addEventListener('change', blurActiveElement);
       }
 
       bindSlider(el.slider1, 1);
@@ -1945,9 +3275,11 @@
           triggerSpinDownStop();
         }
       });
+      el.sliderTau.addEventListener('change', blurActiveElement);
 
       el.resetBtn.addEventListener('click', () => {
         ensureAudioContext();
+        blurActiveElement();
         settings = cloneDefaults();
         saveSettings();
         updateUI();
@@ -1958,11 +3290,10 @@
         }
       });
 
-      // Loop toggle
       el.loopToggleBtn.addEventListener('click', () => {
         ensureAudioContext();
+        blurActiveElement();
         if (audioCtx && audioBuffer && playbackState !== 'stopped') {
-          // Commit buffer anchor before changing loop wrap rules
           commitRateAnchor(audioCtx.currentTime, rateTargetVal, rateTau);
         }
         settings.isLooping = !settings.isLooping;
@@ -1973,9 +3304,9 @@
         updateUI();
       });
 
-      // Mode 0 behavior toggle ('stop' vs 'normal' 1.0x)
       el.zeroModeToggleBtn.addEventListener('click', () => {
         ensureAudioContext();
+        blurActiveElement();
         settings.zeroBehavior = settings.zeroBehavior === 'stop' ? 'normal' : 'stop';
         saveSettings();
         updateUI();
@@ -1984,7 +3315,6 @@
         }
       });
 
-      // File picker & Demo synth
       el.fileLabel.addEventListener('pointerdown', () => ensureAudioContext());
       el.fileLabel.addEventListener('click', () => ensureAudioContext());
       el.fileInput.addEventListener('change', (e) => {
@@ -1993,40 +3323,96 @@
           handleFileSelection(file);
         }
         e.target.value = '';
+        blurActiveElement();
       });
 
-      el.demoBtn.addEventListener('click', () => loadDemoAudio());
-      el.playStopBtn.addEventListener('click', () => toggleMasterPlayStop());
+      el.demoBtn.addEventListener('click', () => {
+        blurActiveElement();
+        loadDemoAudio();
+      });
+      el.playStopBtn.addEventListener('click', () => {
+        blurActiveElement();
+        toggleMasterPlayStop();
+      });
 
-      // Large 2x2 Mode Pads (pointerdown for zero-latency iOS touch + keyboard Enter/Space click)
+      // Tab buttons
+      el.tabMixerBtn.addEventListener('click', () => switchTab('mixer'));
+      el.tabAudiusBtn.addEventListener('click', () => switchTab('audius'));
+      el.tabFavBtn.addEventListener('click', () => switchTab('favorites'));
+
+      // Audius search & random
+      el.audiusSearchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        ensureAudioContext();
+        blurActiveElement();
+        searchAudiusTracks(el.audiusSearchInput.value);
+      });
+
+      el.audiusRandomBtn.addEventListener('click', () => {
+        pickRandomTrackFromList(audiusTracks, el.audiusListStatus);
+      });
+
+      el.favRandomBtn.addEventListener('click', () => {
+        pickRandomTrackFromList(favorites, el.favListStatus);
+      });
+
+      // Large 2x2 Mode Pads
       for (let m = 0; m < 4; m++) {
         const pad = el.pads[m];
         let lastPointerTriggerAt = 0;
         pad.addEventListener('pointerdown', (e) => {
           e.preventDefault();
+          blurActiveElement();
           lastPointerTriggerAt = performance.now();
           selectMode(m, 'pad');
         });
         pad.addEventListener('click', () => {
-          // Avoid double-trigger after pointerdown; still allows keyboard activation
           if (performance.now() - lastPointerTriggerAt < 400) return;
+          blurActiveElement();
           selectMode(m, 'pad');
         });
       }
 
-      // Passive first-gesture audio unlock fallback
-      const unlockOnGesture = () => {
-        ensureAudioContext();
-      };
-      window.addEventListener('touchend', unlockOnGesture, { passive: true });
-      window.addEventListener('click', unlockOnGesture, { passive: true });
+      // Mini mode buttons inside Audius & Favorites tabs
+      for (const btn of el.miniModeBtns) {
+        const modeNum = Number(btn.getAttribute('data-mini-mode'));
+        let lastMiniPointer = 0;
+        btn.addEventListener('pointerdown', (e) => {
+          e.preventDefault();
+          blurActiveElement();
+          lastMiniPointer = performance.now();
+          selectMode(modeNum, 'pad');
+        });
+        btn.addEventListener('click', () => {
+          if (performance.now() - lastMiniPointer < 400) return;
+          blurActiveElement();
+          selectMode(modeNum, 'pad');
+        });
+      }
 
-      // Recover gracefully if iOS Safari interrupts audio when switching apps
-      document.addEventListener('visibilitychange', () => {
-        if (!document.hidden && audioCtx && audioCtx.state !== 'running') {
-          audioCtx.resume().then(() => updateAudioStatusUI()).catch(() => {});
+      // Passive user-gesture AudioContext unlock & suspended/interrupted auto-recovery
+      const unlockOrRecoverAudio = () => {
+        if (!audioCtx || audioCtx.state === 'suspended' || audioCtx.state === 'interrupted') {
+          ensureAudioContext();
         }
-      });
+      };
+      window.addEventListener('pointerdown', unlockOrRecoverAudio, { passive: true });
+      window.addEventListener('touchend', unlockOrRecoverAudio, { passive: true });
+      window.addEventListener('click', unlockOrRecoverAudio, { passive: true });
+
+      const resumeIfVisible = () => {
+        if (!document.hidden && audioCtx && (audioCtx.state === 'suspended' || audioCtx.state === 'interrupted')) {
+          try {
+            const p = audioCtx.resume();
+            if (p && typeof p.then === 'function') {
+              p.then(() => updateAudioStatusUI()).catch(() => {});
+            }
+          } catch (_) {}
+        }
+      };
+      document.addEventListener('visibilitychange', resumeIfVisible);
+      window.addEventListener('pageshow', resumeIfVisible);
+      window.addEventListener('focus', resumeIfVisible);
 
       // ---------- Bluetooth HID Keyboard Handling ----------
       function mapKeyEventToMode(e) {
@@ -2055,6 +3441,9 @@
 
       window.addEventListener('keydown', (e) => {
         if (e.repeat) return;
+        if (e.isComposing === true || e.keyCode === 229) return;
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
+        if (isEditableElementActive()) return;
 
         const mappedMode = mapKeyEventToMode(e);
         showKeyDebug(e, mappedMode);
@@ -2065,7 +3454,15 @@
         }
       });
 
-      // Initialize UI and start render loop
+      // Initialize UI, preset chips, favorites, artwork & start render loop
+      el.nowPlayingArt.addEventListener('error', () => {
+        if (el.nowPlayingArt.src !== PLACEHOLDER_ART_URI) {
+          el.nowPlayingArt.src = PLACEHOLDER_ART_URI;
+        }
+      });
+      renderPresetChips();
+      updateFavoritesUI();
+      updateNowPlayingUI();
       updateUI();
       requestAnimationFrame(renderLoop);
     })();
